@@ -119,11 +119,11 @@ services:
 
   uploader:
     image: thecodingmachine/nodejs:12
-    command: yarn run runprod
+    #command: yarn run runprod
     #command: yarn run profile
     environment:
       DEBUG: "*"
-      STARTUP_COMMAND_1: yarn install
+      #STARTUP_COMMAND_1: yarn install
     volumes:
       - ./uploader:/usr/src/app
     labels:
@@ -134,3 +134,16 @@ services:
       - "traefik.http.routers.uploader-ssl.entryPoints=websecure"
       - "traefik.http.routers.uploader-ssl.tls=true"
       - "traefik.http.routers.uploader-ssl.service=uploader"
+
+  messages:
+    #image: thecodingmachine/nodejs:14
+    image: thecodingmachine/workadventure-back-base:latest
+    environment:
+      #STARTUP_COMMAND_0: sudo apt-get install -y inotify-tools
+      STARTUP_COMMAND_1: yarn install
+      STARTUP_COMMAND_2: yarn run proto:watch
+    volumes:
+      - ./messages:/usr/src/app
+      - ./back:/usr/src/back
+      - ./front:/usr/src/front
+      - ./pusher:/usr/src/pusher
