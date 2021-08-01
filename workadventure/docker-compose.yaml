@@ -7,6 +7,10 @@ services:
       - --providers.docker
       - --entryPoints.web.address=:80
       - --entryPoints.websecure.address=:443
+      - --certificatesresolvers.myresolver.acme.email=${ACME_EMAIL}
+      - --certificatesresolvers.myresolver.acme.storage=/acme.json
+      # used during the challenge
+      - --certificatesresolvers.myresolver.acme.httpchallenge.entrypoint=web
     ports:
       - "80:80"
       - "443:443"
@@ -17,6 +21,7 @@ services:
       - front
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      - ./acme.json:/acme.json
 
     # command:
     #   - --log.level=WARN
@@ -52,6 +57,7 @@ services:
       HOST: "0.0.0.0"
       NODE_ENV: development
       API_URL: pusher.${DOMAIN}
+      PUSHER_URL: pusher.${DOMAIN}
       UPLOADER_URL: uploader.${DOMAIN}
       ADMIN_URL: workadventure.localhost
       STARTUP_COMMAND_1: ./templater.sh
