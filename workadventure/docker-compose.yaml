@@ -116,8 +116,6 @@ services:
       - "traefik.http.routers.maps-ssl.tls=true"
       - "traefik.http.routers.maps-ssl.service=maps"
       - "traefik.http.routers.maps-ssl.tls.certresolver=le"
-    networks:
-      web:
 
   uploader:
     image: thecodingmachine/nodejs:12
