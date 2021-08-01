@@ -27,8 +27,7 @@ services:
       - ./acme.json:/acme.json
     restart: unless-stopped
 
-
-front:
+  front:
     image: thecodingmachine/nodejs:14
     environment:
       DEBUG_MODE: "$DEBUG_MODE"
