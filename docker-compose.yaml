@@ -71,16 +71,4 @@ networks:
   web:
     external: true
 
-Create the file .env with the following contents:
-
-DOMAIN=some.domain.tld
-# These are not used yet
-TURN_SERVER=
-TURN_USER=
-TURN_PASSWORD=
-
-# The email address used by Let's encrypt to send renewal warnings (compulsory)
-ACME_EMAIL=my_letsencrypt_contact@email.address
-# The directory on your OS that Traefik will store all ACME-produced certs in
-CERT_LOCATION=/etc/traefik/acme
 
