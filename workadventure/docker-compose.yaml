@@ -28,31 +28,7 @@ services:
     restart: unless-stopped
 
 
-  # front:
-  #   image: thecodingmachine/workadventure-front:master
-  #   environment:
-  #     DEBUG_MODE: "$DEBUG_MODE"
-  #     JITSI_URL: $JITSI_URL
-  #     JITSI_PRIVATE_MODE: "$JITSI_PRIVATE_MODE"
-  #     API_URL: pusher.${DOMAIN}
-  #     PUSHER_URL: pusher.${DOMAIN}
-  #     UPLOADER_URL: uploader.${DOMAIN}
-  #     ADMIN_URL: ${DOMAIN}
-  #     TURN_SERVER: "${TURN_SERVER}"
-  #     TURN_USER: "${TURN_USER}"
-  #     TURN_PASSWORD: "${TURN_PASSWORD}"
-  #     START_ROOM_URL: "${START_ROOM_URL}"
-  #   labels:
-  #     - "traefik.http.routers.front.rule=Host(`play.${DOMAIN}`)"
-  #     - "traefik.http.routers.front.entryPoints=web,traefik"
-  #     - "traefik.http.services.front.loadbalancer.server.port=80"
-  #     - "traefik.http.routers.front-ssl.rule=Host(`play.${DOMAIN}`)"
-  #     - "traefik.http.routers.front-ssl.entryPoints=websecure"
-  #     - "traefik.http.routers.front-ssl.tls=true"
-  #     - "traefik.http.routers.front-ssl.service=front"
-  #     - "traefik.http.routers.front-ssl.tls.certresolver=myresolver"
-  #   restart: unless-stopped
-  front:
+front:
     image: thecodingmachine/nodejs:14
     environment:
       DEBUG_MODE: "$DEBUG_MODE"
@@ -62,44 +38,25 @@ services:
       NODE_ENV: development
       API_URL: pusher.${DOMAIN}
       UPLOADER_URL: uploader.${DOMAIN}
-      ADMIN_URL: ${DOMAIN}
+      ADMIN_URL: workadventure.localhost
       STARTUP_COMMAND_1: ./templater.sh
       STARTUP_COMMAND_2: yarn install
-      TURN_SERVER: "${TURN_SERVER}" #"turn:coturn.workadventu.re:443,turns:coturn.workadventu.re:443"
-      TURN_USER: "${TURN_USER}" #workadventure
-      TURN_PASSWORD: "${TURN_PASSWORD}" #WorkAdventure123
+      TURN_SERVER: "turn:coturn.workadventu.re:443,turns:coturn.workadventu.re:443"
+      TURN_USER: workadventure
+      TURN_PASSWORD: WorkAdventure123
       START_ROOM_URL: "$START_ROOM_URL"
     command: yarn run start
     volumes:
       - ./front:/usr/src/app
     labels:
-      - "traefik.http.routers.front.rule=Host(`play.workadventure.localhost`)"
+      - "traefik.http.routers.front.rule=Host(`play.${DOMAIN}`)"
       - "traefik.http.routers.front.entryPoints=web,traefik"
       - "traefik.http.services.front.loadbalancer.server.port=8080"
-      - "traefik.http.routers.front-ssl.rule=Host(`play.workadventure.localhost`)"
+      - "traefik.http.routers.front-ssl.rule=Host(`play.${DOMAIN}`)"
       - "traefik.http.routers.front-ssl.entryPoints=websecure"
       - "traefik.http.routers.front-ssl.tls=true"
       - "traefik.http.routers.front-ssl.service=front"
 
-  # pusher:
-  #   image: thecodingmachine/workadventure-pusher:master
-  #   command: yarn run runprod
-  #   environment:
-  #     SECRET_JITSI_KEY: "$SECRET_JITSI_KEY"
-  #     SECRET_KEY: yourSecretKey
-  #     API_URL: back:50051
-  #     JITSI_URL: $JITSI_URL
-  #     JITSI_ISS: $JITSI_ISS
-  #   labels:
-  #     - "traefik.http.routers.pusher.rule=Host(`pusher.${DOMAIN}`)"
-  #     - "traefik.http.routers.pusher.entryPoints=web,traefik"
-  #     - "traefik.http.services.pusher.loadbalancer.server.port=8080"
-  #     - "traefik.http.routers.pusher-ssl.rule=Host(`pusher.${DOMAIN}`)"
-  #     - "traefik.http.routers.pusher-ssl.entryPoints=websecure"
-  #     - "traefik.http.routers.pusher-ssl.tls=true"
-  #     - "traefik.http.routers.pusher-ssl.service=pusher"
-  #     - "traefik.http.routers.pusher-ssl.tls.certresolver=myresolver"
-  #   restart: unless-stopped
   pusher:
     image: thecodingmachine/nodejs:12
     command: yarn dev
@@ -125,26 +82,28 @@ services:
       - "traefik.http.routers.pusher-ssl.tls=true"
       - "traefik.http.routers.pusher-ssl.service=pusher"
 
-
-  # back:
-  #   image: thecodingmachine/workadventure-back:master
-  #   command: yarn run runprod
-  #   environment:
-  #     SECRET_JITSI_KEY: "$SECRET_JITSI_KEY"
-  #     ADMIN_API_TOKEN: "$ADMIN_API_TOKEN"
-  #     ADMIN_API_URL: "$ADMIN_API_URL"
-  #     JITSI_URL: $JITSI_URL
-  #     JITSI_ISS: $JITSI_ISS
-  #   labels:
-  #     - "traefik.http.routers.back.rule=Host(`api.${DOMAIN}`)"
-  #     - "traefik.http.routers.back.entryPoints=web"
-  #     - "traefik.http.services.back.loadbalancer.server.port=8080"
-  #     - "traefik.http.routers.back-ssl.rule=Host(`api.${DOMAIN}`)"
-  #     - "traefik.http.routers.back-ssl.entryPoints=websecure"
-  #     - "traefik.http.routers.back-ssl.tls=true"
-  #     - "traefik.http.routers.back-ssl.service=back"
-  #     - "traefik.http.routers.back-ssl.tls.certresolver=myresolver"
-  #   restart: unless-stopped
+  maps:
+    image: thecodingmachine/nodejs:12-apache
+    environment:
+      DEBUG_MODE: "$DEBUG_MODE"
+      HOST: "0.0.0.0"
+      NODE_ENV: development
+      #APACHE_DOCUMENT_ROOT: dist/
+      #APACHE_EXTENSIONS: headers
+      #APACHE_EXTENSION_HEADERS: 1
+      STARTUP_COMMAND_0: sudo a2enmod headers
+      STARTUP_COMMAND_1: yarn install
+      STARTUP_COMMAND_2: yarn run dev &
+    volumes:
+      - ./maps:/var/www/html
+    labels:
+      - "traefik.http.routers.maps.rule=Host(`maps.${DOMAIN}`)"
+      - "traefik.http.routers.maps.entryPoints=web,traefik"
+      - "traefik.http.services.maps.loadbalancer.server.port=80"
+      - "traefik.http.routers.maps-ssl.rule=Host(`maps.${DOMAIN}`)"
+      - "traefik.http.routers.maps-ssl.entryPoints=websecure"
+      - "traefik.http.routers.maps-ssl.tls=true"
+      - "traefik.http.routers.maps-ssl.service=maps"
 
   back:
     image: thecodingmachine/nodejs:12
@@ -170,32 +129,6 @@ services:
       - "traefik.http.routers.back-ssl.tls=true"
       - "traefik.http.routers.back-ssl.service=back"
 
-
-
-  maps:
-    image: thecodingmachine/nodejs:12-apache
-    environment:
-      DEBUG_MODE: "$DEBUG_MODE"
-      HOST: "0.0.0.0"
-      NODE_ENV: development
-      #APACHE_DOCUMENT_ROOT: dist/
-      #APACHE_EXTENSIONS: headers
-      #APACHE_EXTENSION_HEADERS: 1
-      STARTUP_COMMAND_0: sudo a2enmod headers
-      STARTUP_COMMAND_1: yarn install
-      STARTUP_COMMAND_2: yarn run dev &
-    volumes:
-      - ./maps:/var/www/html
-    labels:
-      - "traefik.http.routers.maps.rule=Host(`maps.${DOMAIN}`)"
-      - "traefik.http.routers.maps.entryPoints=web,traefik"
-      - "traefik.http.services.maps.loadbalancer.server.port=80"
-      - "traefik.http.routers.maps-ssl.rule=Host(`maps.${DOMAIN}`)"
-      - "traefik.http.routers.maps-ssl.entryPoints=websecure"
-      - "traefik.http.routers.maps-ssl.tls=true"
-      - "traefik.http.routers.maps-ssl.service=maps"
-      - "traefik.http.routers.maps-ssl.tls.certresolver=le"
-
   uploader:
     image: thecodingmachine/nodejs:12
     command: yarn dev
@@ -214,7 +147,6 @@ services:
       - "traefik.http.routers.uploader-ssl.tls=true"
       - "traefik.http.routers.uploader-ssl.service=uploader"
 
-
   messages:
     #image: thecodingmachine/nodejs:14
     image: thecodingmachine/workadventure-back-base:latest
@@ -227,3 +159,4 @@ services:
       - ./back:/usr/src/back
       - ./front:/usr/src/front
       - ./pusher:/usr/src/pusher
+
