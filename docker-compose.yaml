@@ -36,7 +36,7 @@ services:
         - "traefik.http.routers.traefik.service=api@internal"
         - "traefik.http.routers.traefik.middlewares=traefik-auth"
         # You should modify the line below to set a password for your Traefik-dashboard
-        - "traefik.http.middlewares.traefik-auth.basicauth.users=admin:$$apr1$$1/1oIfhA$$U69z90wVWeRP4WKy0pB041"
+        - "traefik.http.middlewares.traefik-auth.basicauth.users=admin:$$apr1$$EnW3SgPC$$qg5VH3vCd6KgQmlyTNzu.."
       networks:
         web:
         meet.jitsi:
