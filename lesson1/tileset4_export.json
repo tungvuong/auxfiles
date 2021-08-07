@@ -1,0 +1,14 @@
+{ "columns":11,
+ "image":"..\/..\/Downloads\/workadventure-develop 2\/maps\/Village\/tileset4_export.png",
+ "imageheight":352,
+ "imagewidth":352,
+ "margin":0,
+ "name":"tileset4_export",
+ "spacing":0,
+ "tilecount":121,
+ "tiledversion":"1.7.1",
+ "tileheight":32,
+ "tilewidth":32,
+ "type":"tileset",
+ "version":"1.6"
+}

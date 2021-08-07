@@ -1,0 +1,14 @@
+{ "columns":3,
+ "image":"..\/..\/Downloads\/workadventure-develop 2\/maps\/Village\/Female 02-2.png",
+ "imageheight":128,
+ "imagewidth":96,
+ "margin":0,
+ "name":"Female 02-2",
+ "spacing":0,
+ "tilecount":12,
+ "tiledversion":"1.7.1",
+ "tileheight":32,
+ "tilewidth":32,
+ "type":"tileset",
+ "version":"1.6"
+}

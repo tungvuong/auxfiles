@@ -1,0 +1,14 @@
+{ "columns":12,
+ "image":"..\/..\/Downloads\/workadventure-develop 2\/maps\/Village\/sol_interieur.png",
+ "imageheight":288,
+ "imagewidth":384,
+ "margin":0,
+ "name":"sol_interieur",
+ "spacing":0,
+ "tilecount":108,
+ "tiledversion":"1.7.1",
+ "tileheight":32,
+ "tilewidth":32,
+ "type":"tileset",
+ "version":"1.6"
+}

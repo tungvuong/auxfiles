@@ -1,0 +1,14 @@
+{ "columns":5,
+ "image":"..\/..\/Downloads\/workadventure-tutorial-master\/tile_preview.png",
+ "imageheight":96,
+ "imagewidth":160,
+ "margin":0,
+ "name":"tile_preview",
+ "spacing":0,
+ "tilecount":15,
+ "tiledversion":"1.7.1",
+ "tileheight":32,
+ "tilewidth":32,
+ "type":"tileset",
+ "version":"1.6"
+}
