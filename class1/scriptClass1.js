@@ -14,10 +14,11 @@ var soundConfig = {
     loop : false
 }
 
+var p004_track1_02 = undefined;
 
 // FRONT EVENT
 WA.onEnterZone('popupFrontZone', () => {
-    popUpFront = WA.openPopup("popupFront", "Welcome!", [{
+    popUpFront = WA.openPopup("popupFront", "Welcome", [{
         label: "OK",
         className: "success",
         callback: (popup) => {
@@ -40,14 +41,14 @@ WA.onLeaveZone('popupFrontZone', () => {
 
 // REGISTRATION EVENT
 WA.onEnterZone('popupRegistrationZone', () => {
-
     WA.nav.openCoWebSite(htmlHost+"/1_1",false,"microphone");
-    WA.loadSound(enterSoundUrl).play(soundConfig);
+    p004_track1_02 = WA.loadSound('p004_track1_02.mp3').play(soundConfig);
     WA.displayBubble();
 });
 
 WA.onLeaveZone('popupRegistrationZone', () => {
     WA.removeBubble();
-    WA.loadSound(exitSoundUrl).play(soundConfig);
+    // WA.loadSound(exitSoundUrl).play(soundConfig);
     WA.nav.closeCoWebSite();
+    if (p004_track1_02 !== undefined) p004_track1_02.stop();
 })
