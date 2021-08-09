@@ -16,6 +16,57 @@ var soundConfig = {
 
 var p004_track1_02 = undefined;
 
+
+// initialise voices
+var speech = undefined;
+speechSynthesis.addEventListener("voiceschanged", () => {
+  const voices = speechSynthesis.getVoices()
+});
+const mic = new webkitSpeechRecognition();
+mic.continuous = true;
+mic.lang = 'en-US';
+
+var voice_name = "Google UK English Female";
+var isAgentTalking = false;
+var isEngaged = false;
+function agent(project_id, session_id, text){
+    isAgentTalking = true;
+    fetch('https://localhost:5000/bot', {
+      method: 'post',
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        "query_input": {
+          "text": {
+            "text": text,
+            "language_code": "en-US"
+          }
+        },
+        "project_id": project_id,
+        "session_id": session_id
+      })
+    }).then(res => res.json())
+      .then(res => {
+        speech = new SpeechSynthesisUtterance(res["res"]);
+        var voices = window.speechSynthesis.getVoices();
+        speech.default = false;
+        speech.voice = voices.filter(function(voice) { return voice.name == voice_name; })[0];
+        speech.onstart = function(){
+            mic.stop();
+        }
+        speech.onend = function(event) {
+            isAgentTalking = false;
+            if (isEngaged) mic.start();
+            console.log('agent stops');
+        };
+        window.speechSynthesis.speak(speech);
+      });
+}
+
+
+
 // FRONT EVENT
 WA.onEnterZone('popupFrontZone', () => {
     popUpFront = WA.openPopup("popupFront", "Welcome", [{
@@ -52,4 +103,42 @@ WA.onLeaveZone('popupRegistrationZone', () => {
     // WA.loadSound(exitSoundUrl).play(soundConfig);
     WA.nav.closeCoWebSite();
     if (p004_track1_02 !== undefined) p004_track1_02.stop();
+})
+
+// RECEPTION EVENT
+WA.onEnterZone('popupReceptionZone', () => {
+    WA.nav.openCoWebSite(htmlHost+"/1_1",false,"microphone");
+    WA.displayBubble();
+
+    agent("welcome-rgfs", "abc", "hello");
+    isEngaged = true;
+    // WA.nav.openCoWebSite("https://www.youtube.com/embed/BGSghRuCDJI?autoplay=1&muted=0",false,"autoplay");
+    WA.nav.openCoWebSite("https://localhost/girltalk/boy.gif",false,"microphone");
+    
+    if (isEngaged && !isAgentTalking) try{mic.start();} catch(e){mic.stop();}
+    mic.onstart = function() { 
+        console.log('speak');
+    };
+
+    mic.onerror = function(e) { console.log(e); };
+    mic.onend = function() { console.log('end'); if(isEngaged && !isAgentTalking) try{mic.start();} catch(e){mic.stop();} };
+    mic.onresult = function(event) {
+        ans = ""
+        for (var i = event.resultIndex; i< event.results.length; ++i) {
+            if (event.results[i].isFinal){
+                 console.log(event.results[i][0].transcript);
+                 ans = event.results[i][0].transcript;
+             }
+        }
+        agent("welcome-rgfs", "abc", ans);
+        //console.log(res);
+    };
+});
+
+WA.onLeaveZone('popupReceptionZone', () => {
+    mic.stop();
+    isEngaged = false;
+    if (speech !== undefined) window.speechSynthesis.cancel();
+    WA.removeBubble();
+    WA.nav.closeCoWebSite();
 })
