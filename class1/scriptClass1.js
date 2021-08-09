@@ -42,7 +42,8 @@ WA.onLeaveZone('popupFrontZone', () => {
 // REGISTRATION EVENT
 WA.onEnterZone('popupRegistrationZone', () => {
     WA.nav.openCoWebSite(htmlHost+"/1_1",false,"microphone");
-    p004_track1_02 = WA.loadSound('p004_track1_02.mp3').play(soundConfig);
+    p004_track1_02 = WA.loadSound('p004_track1_02.mp3');
+    p004_track1_02.play(soundConfig);
     WA.displayBubble();
 });
 
