@@ -16,8 +16,7 @@ var soundConfig = {
 
 
 WA.onEnterZone('popupFrontZone', () => {
-    popUpFront = WA.openPopup("popupFront", "Title", [{
-        label: "OK",
+    popUpFront = WA.openPopup("popupFront", "Welcome!", [{
         className: "success",
         callback: (popup) => {
             popup.close();
