@@ -15,8 +15,10 @@ var soundConfig = {
 }
 
 
+// FRONT EVENT
 WA.onEnterZone('popupFrontZone', () => {
     popUpFront = WA.openPopup("popupFront", "Welcome!", [{
+        label: "OK",
         className: "success",
         callback: (popup) => {
             popup.close();
@@ -33,4 +35,19 @@ WA.onLeaveZone('popupFrontZone', () => {
     WA.loadSound(exitSoundUrl).play(soundConfig);
     WA.nav.closeCoWebSite();
     if(popUpFront !== undefined) popUpFront.close();
+})
+
+
+// REGISTRATION EVENT
+WA.onEnterZone('popupRegistrationZone', () => {
+
+    WA.nav.openCoWebSite(htmlHost+"/1_1",false,"microphone");
+    WA.loadSound(enterSoundUrl).play(soundConfig);
+    WA.displayBubble();
+});
+
+WA.onLeaveZone('popupRegistrationZone', () => {
+    WA.removeBubble();
+    WA.loadSound(exitSoundUrl).play(soundConfig);
+    WA.nav.closeCoWebSite();
 })
