@@ -5,6 +5,7 @@ var targetObjectTutoBubble ='Tutobubble';
 var targetObjectTutoChat ='tutoChat';
 var targetObjectTutoExplanation ='tutoExplanation';
 var popUpExplanation = undefined;
+var popUpFront = undefined;
 var enterSoundUrl = "webrtc-in.mp3";
 var exitSoundUrl = "webrtc-out.mp3";
 var soundConfig = {
@@ -14,6 +15,15 @@ var soundConfig = {
 
 
 WA.onEnterZone('popupFrontZone', () => {
+    popUpFront = WA.openPopup("popupFront", "Title", [{
+        label: "OK",
+        className: "success",
+        callback: (popup) => {
+            popup.close();
+        }
+    }]);
+
+    WA.nav.openCoWebSite("https://localhost/1_0",false,"microphone");
     WA.loadSound(enterSoundUrl).play(soundConfig);
     WA.displayBubble();
 });
@@ -21,4 +31,6 @@ WA.onEnterZone('popupFrontZone', () => {
 WA.onLeaveZone('popupFrontZone', () => {
     WA.removeBubble();
     WA.loadSound(exitSoundUrl).play(soundConfig);
+    WA.nav.closeCoWebSite();
+    if(popUpFront !== undefined) popUpFront.close();
 })
