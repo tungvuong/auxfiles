@@ -1,3 +1,4 @@
+var htmlHost = "https://localhost:5000"
 var isFirstTimeTuto = false;
 var textFirstPopup = 'Hey ! This is how to start a discussion with someone ! You can be 4 max in a bubble.';
 var textSecondPopup = 'You can also use the chat to communicate ! ';
@@ -23,7 +24,7 @@ WA.onEnterZone('popupFrontZone', () => {
         }
     }]);
 
-    WA.nav.openCoWebSite("https://localhost/1_0",false,"microphone");
+    WA.nav.openCoWebSite(htmlHost+"/1_0",false,"microphone");
     WA.loadSound(enterSoundUrl).play(soundConfig);
     WA.displayBubble();
 });
