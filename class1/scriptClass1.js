@@ -146,12 +146,12 @@ WA.onLeaveZone('popupReceptionZone', () => {
 
 
 // TUTOR EVENT
-WA.onEnterZone('popupTutorZone', () => {
+WA.onEnterZone('popupBookExerciseZone', () => {
     WA.nav.openCoWebSite(htmlHost+"/1_2",false,"microphone");
     WA.displayBubble();
 });
 
-WA.onLeaveZone('popupTutorZone', () => {
+WA.onLeaveZone('popupBookExerciseZone', () => {
     WA.removeBubble();
     WA.nav.closeCoWebSite();
 })
