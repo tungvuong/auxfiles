@@ -15,6 +15,7 @@ var soundConfig = {
 }
 
 var p004_track1_02 = undefined;
+var family_track = undefined;
 
 
 // initialise voices
@@ -142,3 +143,31 @@ WA.onLeaveZone('popupReceptionZone', () => {
     WA.removeBubble();
     WA.nav.closeCoWebSite();
 })
+
+
+// TUTOR EVENT
+WA.onEnterZone('popupBookTutorZone', () => {
+    WA.nav.openCoWebSite(htmlHost+"/1_2",false,"microphone");
+    WA.displayBubble();
+});
+
+WA.onLeaveZone('popupBookTutorZone', () => {
+    WA.removeBubble();
+    WA.nav.closeCoWebSite();
+})
+
+
+// ALEX EVENT
+WA.onEnterZone('popupBookFionaZone', () => {
+    WA.nav.openCoWebSite(htmlHost+"/1_3",false,"microphone");
+    family_track = WA.loadSound('family_track.mp3');
+    family_track.play(soundConfig);
+    WA.displayBubble();
+});
+
+WA.onLeaveZone('popupBookFionaZone', () => {
+    WA.removeBubble();
+    WA.nav.closeCoWebSite();
+    if (family_track !== undefined) family_track.stop();
+})
+
