@@ -158,14 +158,14 @@ WA.onLeaveZone('popupBookExerciseZone', () => {
 
 
 // ALEX EVENT
-WA.onEnterZone('popupBookFionaZone', () => {
+WA.onEnterZone('popupBookTeacherZone', () => {
     WA.nav.openCoWebSite(htmlHost+"/1_3",false,"microphone");
     family_track = WA.loadSound('family_track.mp3');
     family_track.play({volume : 1,loop : false});
     WA.displayBubble();
 });
 
-WA.onLeaveZone('popupBookFionaZone', () => {
+WA.onLeaveZone('popupBookTeacherZone', () => {
     WA.removeBubble();
     WA.nav.closeCoWebSite();
     if (family_track !== undefined) family_track.stop();
