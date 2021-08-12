@@ -32,7 +32,7 @@ var isAgentTalking = false;
 var isEngaged = false;
 function agent(project_id, session_id, text){
     isAgentTalking = true;
-    fetch('https://localhost:5000/bot', {
+    fetch('https://localhost:5000/bot/'+project_id, {
       method: 'post',
       headers: {
         'Accept': 'application/json, text/plain, */*',
@@ -157,7 +157,7 @@ WA.onLeaveZone('popupBookExerciseZone', () => {
 })
 
 
-// ALEX EVENT
+// Teacher EVENT
 WA.onEnterZone('popupBookTeacherZone', () => {
     WA.nav.openCoWebSite(htmlHost+"/1_3",false,"microphone");
     family_track = WA.loadSound('family_track.mp3');
