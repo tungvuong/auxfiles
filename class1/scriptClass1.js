@@ -111,7 +111,7 @@ WA.onEnterZone('popupReceptionZone', () => {
     WA.nav.openCoWebSite(htmlHost+"/1_1",false,"microphone");
     WA.displayBubble();
 
-    agent("welcome_rgfs", "abc", "hello");
+    agent("welcome-rgfs", "abc", "hello");
     isEngaged = true;
     // WA.nav.openCoWebSite("https://www.youtube.com/embed/BGSghRuCDJI?autoplay=1&muted=0",false,"autoplay");
     WA.nav.openCoWebSite("https://localhost/girltalk/tenor.gif",false,"microphone");
@@ -131,7 +131,7 @@ WA.onEnterZone('popupReceptionZone', () => {
                  ans = event.results[i][0].transcript;
              }
         }
-        agent("welcome_rgfs", "abc", ans);
+        agent("welcome-rgfs", "abc", ans);
         //console.log(res);
     };
 });
@@ -173,10 +173,10 @@ WA.onLeaveZone('popupBookTeacherZone', () => {
 
 // TEACHER EVENT
 WA.onEnterZone('popupTeacherZone', () => {
-    WA.nav.openCoWebSite(htmlHost+"/1_1",false,"microphone");
+    WA.nav.openCoWebSite(htmlHost+"/1_3",false,"microphone");
     WA.displayBubble();
 
-    agent("family_agent", "abc", "hello");
+    agent("family-agent-bpph", "abc", "hello");
     isEngaged = true;
     // WA.nav.openCoWebSite("https://www.youtube.com/embed/BGSghRuCDJI?autoplay=1&muted=0",false,"autoplay");
     WA.nav.openCoWebSite("https://localhost/girltalk/tenor.gif",false,"microphone");
@@ -196,7 +196,7 @@ WA.onEnterZone('popupTeacherZone', () => {
                  ans = event.results[i][0].transcript;
              }
         }
-        agent("family_agent", "abc", ans);
+        agent("family-agent-bpph", "abc", ans);
         //console.log(res);
     };
 });
