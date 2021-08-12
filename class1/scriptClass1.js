@@ -32,7 +32,7 @@ var isAgentTalking = false;
 var isEngaged = false;
 function agent(project_id, session_id, text){
     isAgentTalking = true;
-    fetch('https://localhost:5000/bot/'+project_id, {
+    fetch('https://localhost:5000/bot', {
       method: 'post',
       headers: {
         'Accept': 'application/json, text/plain, */*',
@@ -111,7 +111,7 @@ WA.onEnterZone('popupReceptionZone', () => {
     WA.nav.openCoWebSite(htmlHost+"/1_1",false,"microphone");
     WA.displayBubble();
 
-    agent("welcome_rgfs", "abc", "hello");
+    agent("welcome-rgfs", "abc", "hello");
     isEngaged = true;
     // WA.nav.openCoWebSite("https://www.youtube.com/embed/BGSghRuCDJI?autoplay=1&muted=0",false,"autoplay");
     WA.nav.openCoWebSite("https://localhost/girltalk/tenor.gif",false,"microphone");
@@ -131,7 +131,7 @@ WA.onEnterZone('popupReceptionZone', () => {
                  ans = event.results[i][0].transcript;
              }
         }
-        agent("welcome_rgfs", "abc", ans);
+        agent("welcome-rgfs", "abc", ans);
         //console.log(res);
     };
 });
@@ -157,7 +157,7 @@ WA.onLeaveZone('popupBookExerciseZone', () => {
 })
 
 
-// BOOK TEACHER EVENT
+// ALEX EVENT
 WA.onEnterZone('popupBookTeacherZone', () => {
     WA.nav.openCoWebSite(htmlHost+"/1_3",false,"microphone");
     family_track = WA.loadSound('family_track.mp3');
@@ -170,5 +170,4 @@ WA.onLeaveZone('popupBookTeacherZone', () => {
     WA.nav.closeCoWebSite();
     if (family_track !== undefined) family_track.stop();
 })
-
 
