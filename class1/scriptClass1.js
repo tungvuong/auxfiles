@@ -157,7 +157,7 @@ WA.onLeaveZone('popupBookExerciseZone', () => {
 })
 
 
-// Teacher EVENT
+// book Teacher EVENT
 WA.onEnterZone('popupBookTeacherZone', () => {
     WA.nav.openCoWebSite(htmlHost+"/1_3",false,"microphone");
     family_track = WA.loadSound('family_track.mp3');
@@ -171,3 +171,40 @@ WA.onLeaveZone('popupBookTeacherZone', () => {
     if (family_track !== undefined) family_track.stop();
 })
 
+// techer EVENT
+WA.onEnterZone('popupTeacherZone', () => {
+    WA.nav.openCoWebSite(htmlHost+"/1_3",false,"microphone");
+    WA.displayBubble();
+
+    agent("family-agent-bpph", "abc", "hello");
+    isEngaged = true;
+    // WA.nav.openCoWebSite("https://www.youtube.com/embed/BGSghRuCDJI?autoplay=1&muted=0",false,"autoplay");
+    WA.nav.openCoWebSite("https://localhost/girltalk/tenor.gif",false,"microphone");
+    
+    if (isEngaged && !isAgentTalking) try{mic.start();} catch(e){mic.stop();}
+    mic.onstart = function() { 
+        console.log('speak');
+    };
+
+    mic.onerror = function(e) { console.log(e); };
+    mic.onend = function() { console.log('end'); if(isEngaged && !isAgentTalking) try{mic.start();} catch(e){mic.stop();} };
+    mic.onresult = function(event) {
+        ans = ""
+        for (var i = event.resultIndex; i< event.results.length; ++i) {
+            if (event.results[i].isFinal){
+                 console.log(event.results[i][0].transcript);
+                 ans = event.results[i][0].transcript;
+             }
+        }
+        agent("family-agent-bpph", "abc", ans);
+        //console.log(res);
+    };
+});
+
+WA.onLeaveZone('popupTeacherZone', () => {
+    mic.stop();
+    isEngaged = false;
+    if (speech !== undefined) window.speechSynthesis.cancel();
+    WA.removeBubble();
+    WA.nav.closeCoWebSite();
+})
