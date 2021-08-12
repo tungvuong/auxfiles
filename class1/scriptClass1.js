@@ -161,7 +161,7 @@ WA.onLeaveZone('popupBookExerciseZone', () => {
 WA.onEnterZone('popupBookFionaZone', () => {
     WA.nav.openCoWebSite(htmlHost+"/1_3",false,"microphone");
     family_track = WA.loadSound('family_track.mp3');
-    family_track.play(soundConfig);
+    family_track.play({volume : 1,loop : false});
     WA.displayBubble();
 });
 
