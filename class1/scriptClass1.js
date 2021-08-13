@@ -34,11 +34,9 @@ function agent(project_id, session_id, text){
     isAgentTalking = true;
     fetch('https://localhost:5000/bot/'+project_id, {
       method: 'post',
-      mode: "cors",
       headers: {
         'Accept': 'application/json, text/plain, */*',
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin':'*'
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({
         "query_input": {
@@ -174,7 +172,7 @@ WA.onLeaveZone('popupBookTeacherZone', () => {
     if (family_track !== undefined) family_track.stop();
 })
 
-// teacher EVENT
+// techer EVENT
 WA.onEnterZone('popupTeacherZone', () => {
     WA.nav.openCoWebSite(htmlHost+"/1_3",false,"microphone");
     WA.displayBubble();
@@ -182,7 +180,7 @@ WA.onEnterZone('popupTeacherZone', () => {
     agent("family-agent-bpph", "abc", "hello");
     isEngaged = true;
     // WA.nav.openCoWebSite("https://www.youtube.com/embed/BGSghRuCDJI?autoplay=1&muted=0",false,"autoplay");
-    // WA.nav.openCoWebSite("https://localhost/girltalk/tenor.gif",false,"microphone");
+    WA.nav.openCoWebSite("https://localhost/girltalk/tenor.gif",false,"microphone");
     
     if (isEngaged && !isAgentTalking) try{mic.start();} catch(e){mic.stop();}
     mic.onstart = function() { 
@@ -213,58 +211,4 @@ WA.onLeaveZone('popupTeacherZone', () => {
 })
 
 
-
-// book Alex EVENT
-WA.onEnterZone('popupBookAlexZone', () => {
-    WA.nav.openCoWebSite(htmlHost+"/1_4",false,"microphone");
-    family_track = WA.loadSound('greeting_track.mp3');
-    family_track.play({volume : 1,loop : false});
-    WA.displayBubble();
-});
-
-WA.onLeaveZone('popupBookAlexZone', () => {
-    WA.removeBubble();
-    WA.nav.closeCoWebSite();
-    if (family_track !== undefined) family_track.stop();
-})
-
-
-
-// alex EVENT
-WA.onEnterZone('popupAlexZone', () => {
-    WA.nav.openCoWebSite(htmlHost+"/1_4",false,"microphone");
-    WA.displayBubble();
-
-    agent("greeting-afky", "abc", "hello");
-    isEngaged = true;
-    // WA.nav.openCoWebSite("https://www.youtube.com/embed/BGSghRuCDJI?autoplay=1&muted=0",false,"autoplay");
-    // WA.nav.openCoWebSite("https://localhost/girltalk/boy.gif",false,"microphone");
-    
-    if (isEngaged && !isAgentTalking) try{mic.start();} catch(e){mic.stop();}
-    mic.onstart = function() { 
-        console.log('speak');
-    };
-
-    mic.onerror = function(e) { console.log(e); };
-    mic.onend = function() { console.log('end'); if(isEngaged && !isAgentTalking) try{mic.start();} catch(e){mic.stop();} };
-    mic.onresult = function(event) {
-        ans = ""
-        for (var i = event.resultIndex; i< event.results.length; ++i) {
-            if (event.results[i].isFinal){
-                 console.log(event.results[i][0].transcript);
-                 ans = event.results[i][0].transcript;
-             }
-        }
-        agent("greeting-afky", "abc", ans);
-        //console.log(res);
-    };
-});
-
-WA.onLeaveZone('popupAlexZone', () => {
-    mic.stop();
-    isEngaged = false;
-    if (speech !== undefined) window.speechSynthesis.cancel();
-    WA.removeBubble();
-    WA.nav.closeCoWebSite();
-})
 
