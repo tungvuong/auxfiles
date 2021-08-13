@@ -111,7 +111,7 @@ WA.onLeaveZone('popupRegistrationZone', () => {
 
 // RECEPTION EVENT
 WA.onEnterZone('popupReceptionZone', () => {
-    WA.nav.openCoWebSite(htmlHost+"/1_1",false,"microphone");
+    WA.nav.openCoWebSite(htmlHost+"/1_1_0",false,"microphone");
     WA.displayBubble();
     voice_name = "Google UK English Female";
     agent("welcome-rgfs", "abc", "hello");
