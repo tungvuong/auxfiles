@@ -34,9 +34,11 @@ function agent(project_id, session_id, text){
     isAgentTalking = true;
     fetch('https://localhost:5000/bot/'+project_id, {
       method: 'post',
+      mode: "cors",
       headers: {
         'Accept': 'application/json, text/plain, */*',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin':'*'
       },
       body: JSON.stringify({
         "query_input": {
