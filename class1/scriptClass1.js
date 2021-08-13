@@ -16,6 +16,8 @@ var soundConfig = {
 
 var p004_track1_02 = undefined;
 var family_track = undefined;
+var greeting_track = undefined;
+var friend_track = undefined;
 
 
 // initialise voices
@@ -111,7 +113,7 @@ WA.onLeaveZone('popupRegistrationZone', () => {
 WA.onEnterZone('popupReceptionZone', () => {
     WA.nav.openCoWebSite(htmlHost+"/1_1",false,"microphone");
     WA.displayBubble();
-
+    voice_name = "Google UK English Female";
     agent("welcome-rgfs", "abc", "hello");
     isEngaged = true;
     // WA.nav.openCoWebSite("https://www.youtube.com/embed/BGSghRuCDJI?autoplay=1&muted=0",false,"autoplay");
@@ -176,7 +178,7 @@ WA.onLeaveZone('popupBookTeacherZone', () => {
 WA.onEnterZone('popupTeacherZone', () => {
     WA.nav.openCoWebSite(htmlHost+"/1_3",false,"microphone");
     WA.displayBubble();
-
+    voice_name = "Google UK English Female";
     agent("family-agent-bpph", "abc", "hello");
     isEngaged = true;
     // WA.nav.openCoWebSite("https://www.youtube.com/embed/BGSghRuCDJI?autoplay=1&muted=0",false,"autoplay");
@@ -215,15 +217,15 @@ WA.onLeaveZone('popupTeacherZone', () => {
 // book Alex EVENT
 WA.onEnterZone('popupBookAlexZone', () => {
     WA.nav.openCoWebSite(htmlHost+"/1_4",false,"microphone");
-    family_track = WA.loadSound('greeting_track.mp3');
-    family_track.play({volume : 1,loop : false});
+    greeting_track = WA.loadSound('greeting_track.mp3');
+    greeting_track.play({volume : 1,loop : false});
     WA.displayBubble();
 });
 
 WA.onLeaveZone('popupBookAlexZone', () => {
     WA.removeBubble();
     WA.nav.closeCoWebSite();
-    if (family_track !== undefined) family_track.stop();
+    if (greeting_track !== undefined) greeting_track.stop();
 })
 
 
@@ -259,6 +261,60 @@ WA.onEnterZone('popupAlexZone', () => {
 });
 
 WA.onLeaveZone('popupAlexZone', () => {
+    mic.stop();
+    isEngaged = false;
+    if (speech !== undefined) window.speechSynthesis.cancel();
+    WA.removeBubble();
+    WA.nav.closeCoWebSite();
+})
+
+
+// book Fiona EVENT
+WA.onEnterZone('popupBookFionaZone', () => {
+    WA.nav.openCoWebSite(htmlHost+"/1_5",false,"microphone");
+    friend_track = WA.loadSound('friend_track.mp3');
+    friend_track.play({volume : 1,loop : false});
+    WA.displayBubble();
+});
+
+WA.onLeaveZone('popupBookFionaZone', () => {
+    WA.removeBubble();
+    WA.nav.closeCoWebSite();
+    if (friend_track !== undefined) friend_track.stop();
+})
+
+
+// Fiona EVENT
+WA.onEnterZone('popupFionaZone', () => {
+    WA.nav.openCoWebSite(htmlHost+"/1_5",false,"microphone");
+    WA.displayBubble();
+    voice_name = "Google UK English Female";
+    agent("aboutfriendagent-stu9", "abc", "hello");
+    isEngaged = true;
+    // WA.nav.openCoWebSite("https://www.youtube.com/embed/BGSghRuCDJI?autoplay=1&muted=0",false,"autoplay");
+    // WA.nav.openCoWebSite("https://localhost/girltalk/boy.gif",false,"microphone");
+
+    if (isEngaged && !isAgentTalking) try{mic.start();} catch(e){mic.stop();}
+    mic.onstart = function() { 
+        console.log('speak');
+    };
+
+    mic.onerror = function(e) { console.log(e); };
+    mic.onend = function() { console.log('end'); if(isEngaged && !isAgentTalking) try{mic.start();} catch(e){mic.stop();} };
+    mic.onresult = function(event) {
+        ans = ""
+        for (var i = event.resultIndex; i< event.results.length; ++i) {
+            if (event.results[i].isFinal){
+                 console.log(event.results[i][0].transcript);
+                 ans = event.results[i][0].transcript;
+             }
+        }
+        agent("aboutfriendagent-stu9", "abc", ans);
+        //console.log(res);
+    };
+});
+
+WA.onLeaveZone('popupFionaZone', () => {
     mic.stop();
     isEngaged = false;
     if (speech !== undefined) window.speechSynthesis.cancel();
