@@ -32,7 +32,7 @@ var isAgentTalking = false;
 var isEngaged = false;
 function agent(project_id, session_id, text){
     isAgentTalking = true;
-    fetch('https://localhost:5000/bot/'+project_id, {
+    fetch('https://localhost:5000/bot', {
       method: 'post',
       headers: {
         'Accept': 'application/json, text/plain, */*',
