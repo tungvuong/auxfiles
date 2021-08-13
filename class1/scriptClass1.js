@@ -321,3 +321,56 @@ WA.onLeaveZone('popupFionaZone', () => {
     WA.removeBubble();
     WA.nav.closeCoWebSite();
 })
+
+
+
+// book Peter EVENT
+WA.onEnterZone('popupBookPeterZone', () => {
+    WA.nav.openCoWebSite(htmlHost+"/1_6",false,"microphone");
+    WA.displayBubble();
+});
+
+WA.onLeaveZone('popupBookPeterZone', () => {
+    WA.removeBubble();
+    WA.nav.closeCoWebSite();
+})
+
+
+
+// Peter EVENT
+WA.onEnterZone('popupPeterZone', () => {
+    WA.nav.openCoWebSite(htmlHost+"/1_5",false,"microphone");
+    WA.displayBubble();
+    voice_name = "Google UK English Male";
+    agent("jokes-kdat", "abc", "hello");
+    isEngaged = true;
+    // WA.nav.openCoWebSite("https://www.youtube.com/embed/BGSghRuCDJI?autoplay=1&muted=0",false,"autoplay");
+    // WA.nav.openCoWebSite("https://localhost/girltalk/boy.gif",false,"microphone");
+
+    if (isEngaged && !isAgentTalking) try{mic.start();} catch(e){mic.stop();}
+    mic.onstart = function() { 
+        console.log('speak');
+    };
+
+    mic.onerror = function(e) { console.log(e); };
+    mic.onend = function() { console.log('end'); if(isEngaged && !isAgentTalking) try{mic.start();} catch(e){mic.stop();} };
+    mic.onresult = function(event) {
+        ans = ""
+        for (var i = event.resultIndex; i< event.results.length; ++i) {
+            if (event.results[i].isFinal){
+                 console.log(event.results[i][0].transcript);
+                 ans = event.results[i][0].transcript;
+             }
+        }
+        agent("jokes-kdat", "abc", ans);
+        //console.log(res);
+    };
+});
+
+WA.onLeaveZone('popupPeterZone', () => {
+    mic.stop();
+    isEngaged = false;
+    if (speech !== undefined) window.speechSynthesis.cancel();
+    WA.removeBubble();
+    WA.nav.closeCoWebSite();
+})
