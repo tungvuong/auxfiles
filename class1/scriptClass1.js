@@ -232,7 +232,7 @@ WA.onLeaveZone('popupBookAlexZone', () => {
 WA.onEnterZone('popupAlexZone', () => {
     WA.nav.openCoWebSite(htmlHost+"/1_4",false,"microphone");
     WA.displayBubble();
-
+    voice_name = "Google UK English Male";
     agent("greeting-afky", "abc", "hello");
     isEngaged = true;
     // WA.nav.openCoWebSite("https://www.youtube.com/embed/BGSghRuCDJI?autoplay=1&muted=0",false,"autoplay");
