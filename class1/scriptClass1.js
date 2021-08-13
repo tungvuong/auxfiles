@@ -19,6 +19,12 @@ var family_track = undefined;
 var greeting_track = undefined;
 var friend_track = undefined;
 
+function stopAllTrack(){
+    if (friend_track !== undefined) friend_track.stop();
+    if (family_track !== undefined) family_track.stop();
+    if (greeting_track !== undefined) greeting_track.stop();
+    if (p004_track1_02 !== undefined) p004_track1_02.stop();
+}
 
 // initialise voices
 var speech = undefined;
@@ -73,6 +79,7 @@ function agent(project_id, session_id, text){
 
 // FRONT EVENT
 WA.onEnterZone('popupFrontZone', () => {
+    stopAllTrack();
     popUpFront = WA.openPopup("popupFront", "Welcome", [{
         label: "OK",
         className: "success",
@@ -96,6 +103,7 @@ WA.onLeaveZone('popupFrontZone', () => {
 
 // REGISTRATION EVENT
 WA.onEnterZone('popupRegistrationZone', () => {
+    stopAllTrack();
     WA.nav.openCoWebSite(htmlHost+"/1_1",false,"microphone");
     p004_track1_02 = WA.loadSound('p004_track1_02.mp3');
     p004_track1_02.play(soundConfig);
@@ -111,6 +119,7 @@ WA.onLeaveZone('popupRegistrationZone', () => {
 
 // RECEPTION EVENT
 WA.onEnterZone('popupReceptionZone', () => {
+    stopAllTrack();
     WA.nav.openCoWebSite(htmlHost+"/1_1_0",false,"microphone");
     WA.displayBubble();
     voice_name = "Google UK English Female";
@@ -162,6 +171,7 @@ WA.onLeaveZone('popupBookExerciseZone', () => {
 
 // book Teacher EVENT
 WA.onEnterZone('popupBookTeacherZone', () => {
+    stopAllTrack();
     WA.nav.openCoWebSite(htmlHost+"/1_3",false,"microphone");
     family_track = WA.loadSound('family_track.mp3');
     family_track.play({volume : 1,loop : false});
@@ -176,6 +186,7 @@ WA.onLeaveZone('popupBookTeacherZone', () => {
 
 // techer EVENT
 WA.onEnterZone('popupTeacherZone', () => {
+    stopAllTrack();
     WA.nav.openCoWebSite(htmlHost+"/1_3",false,"microphone");
     WA.displayBubble();
     voice_name = "Google UK English Female";
@@ -216,6 +227,7 @@ WA.onLeaveZone('popupTeacherZone', () => {
 
 // book Alex EVENT
 WA.onEnterZone('popupBookAlexZone', () => {
+    stopAllTrack();
     WA.nav.openCoWebSite(htmlHost+"/1_4",false,"microphone");
     greeting_track = WA.loadSound('greeting_track.mp3');
     greeting_track.play({volume : 1,loop : false});
@@ -232,6 +244,7 @@ WA.onLeaveZone('popupBookAlexZone', () => {
 
 // alex EVENT
 WA.onEnterZone('popupAlexZone', () => {
+    stopAllTrack();
     WA.nav.openCoWebSite(htmlHost+"/1_4",false,"microphone");
     WA.displayBubble();
     voice_name = "Google UK English Male";
@@ -271,6 +284,7 @@ WA.onLeaveZone('popupAlexZone', () => {
 
 // book Fiona EVENT
 WA.onEnterZone('popupBookFionaZone', () => {
+    stopAllTrack();
     WA.nav.openCoWebSite(htmlHost+"/1_5",false,"microphone");
     friend_track = WA.loadSound('friend_track.mp3');
     friend_track.play({volume : 1,loop : false});
@@ -286,6 +300,7 @@ WA.onLeaveZone('popupBookFionaZone', () => {
 
 // Fiona EVENT
 WA.onEnterZone('popupFionaZone', () => {
+    stopAllTrack();
     WA.nav.openCoWebSite(htmlHost+"/1_5",false,"microphone");
     WA.displayBubble();
     voice_name = "Google UK English Female";
@@ -326,6 +341,7 @@ WA.onLeaveZone('popupFionaZone', () => {
 
 // book Peter EVENT
 WA.onEnterZone('popupBookPeterZone', () => {
+    stopAllTrack();
     WA.nav.openCoWebSite(htmlHost+"/1_6",false,"microphone");
     WA.displayBubble();
 });
@@ -339,6 +355,7 @@ WA.onLeaveZone('popupBookPeterZone', () => {
 
 // Peter EVENT
 WA.onEnterZone('popupPeterZone', () => {
+    stopAllTrack();
     WA.nav.openCoWebSite(htmlHost+"/1_6",false,"microphone");
     WA.displayBubble();
     voice_name = "Google UK English Male";
