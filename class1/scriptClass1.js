@@ -339,7 +339,7 @@ WA.onLeaveZone('popupBookPeterZone', () => {
 
 // Peter EVENT
 WA.onEnterZone('popupPeterZone', () => {
-    WA.nav.openCoWebSite(htmlHost+"/1_5",false,"microphone");
+    WA.nav.openCoWebSite(htmlHost+"/1_6",false,"microphone");
     WA.displayBubble();
     voice_name = "Google UK English Male";
     agent("jokes-kdat", "abc", "hello");
